@@ -1,0 +1,31 @@
+<!doctype>
+<html>
+  <head>
+    <script type="text/javascript" src="videostrip.js"></script>
+    <script>
+      document.addEventListener( 'DOMContentLoaded', function( e ) {
+        var videoStrip = new VideoStrip({
+          source: "video-source",
+          canvas: "output-canvas",
+          frame: "test-canvas",
+          vignet: "vignet-source",
+          stats: "stats-div"
+        });
+      }, false );
+    </script>
+    <style>
+      html, body {
+        background: #c0c0c0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stats-div"></div>
+    <canvas width="6000" height="200" id="output-canvas"></canvas>
+    <canvas id="test-canvas"></canvas> 
+    <canvas id="vignet-source"></canvas>
+    <video id="video-source" controls autobuffer="true" preload="auto">
+      <source src="NinjaTest1.ogv" />
+    </video>
+  </body>
+</html>
