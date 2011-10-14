@@ -5,12 +5,8 @@
         canvasHeight = canvas.height,
         ctx = canvas.getContext( '2d' ),
         source = document.getElementById( options.source ),
-        vignet = document.getElementById( options.vignet ),
-        frame = document.getElementById( options.frame ),
-        stats = document.getElementById( options.stats ),
-        steps = options.steps || 1000;
-
-    var stepsTaken = 0,
+        vignet = document.createElement( "canvas" ),
+        frame = document.createElement( "canvas" ),
         frameCtx,
         adjustedWidth;
 
@@ -19,7 +15,6 @@
     ctx.globalAlpha = 0.1;
 
     function drawFrame( e ) {
-      stats.innerHTML = stepsTaken + "/" + steps;
       var canvasX = canvasWidth/source.duration*source.currentTime-adjustedWidth/2;
 
       frameCtx.clearRect( 0, 0, frame.width, frame.height );
@@ -50,6 +45,8 @@
         vignetCtx.fill();
       }
 
+      var canvasLeft = canvas.getBoundingClientRect().left;
+
       canvas.addEventListener( 'mousedown', function( e ) {
         var drawing = false;
         function onSeek( e ) {
@@ -59,9 +56,8 @@
         } //onSeek
         function startDraw( e ) {
           if ( !drawing ) {
-            console.log('doin');
             source.addEventListener( 'seeked', onSeek, false );
-            source.currentTime = source.duration/canvas.width*e.clientX;
+            source.currentTime = source.duration/canvas.width*(e.clientX-canvasLeft);
             drawing = true;
           } //if
         } //draw
